@@ -22,4 +22,9 @@
     <string name="genre_board_games">Board Games</string>
     <string name="genre_educational">Educational</string>
     <string name="genre_card">Card</string>
+    <string name="game_release_date">Release date</string>
+    <string name="game_platform">Platforms</string>
+    <string name="game_metacritic">Metacritic score</string>
+    <string name="game_sorting">Sort by</string>
+    <string name="settings">Settings</string>
 </resources>
