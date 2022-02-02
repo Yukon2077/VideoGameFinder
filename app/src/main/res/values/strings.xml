@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Video Game Finder</string>
+    <string name="search_button">Search game</string>
+    <string name="game_name_hint">Name</string>
+    <string name="game_genre">Genre</string>
+    <string name="genre_action">Action</string>
+    <string name="genre_indie">Indie</string>
+    <string name="genre_adventure">Adventure</string>
+    <string name="genre_rpg">RPG</string>
+    <string name="genre_strategy">Strategy</string>
+    <string name="genre_shooter">Shooter</string>
+    <string name="genre_causal">Causal</string>
+    <string name="genre_simulation">Simulation</string>
+    <string name="genre_puzzle">Puzzle</string>
+    <string name="genre_arcade">Arcade</string>
+    <string name="genre_platformer">Platformer</string>
+    <string name="genre_racing">Racing</string>
+    <string name="genre_massively_multiplayer">Massively Multiplayer</string>
+    <string name="genre_sports">Sports</string>
+    <string name="genre_fighting">Fighting</string>
+    <string name="genre_family">Family</string>
+    <string name="genre_board_games">Board Games</string>
+    <string name="genre_educational">Educational</string>
+    <string name="genre_card">Card</string>
+</resources>
