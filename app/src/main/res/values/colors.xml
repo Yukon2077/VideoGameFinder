@@ -1,6 +1,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="translucent_black">#88000000</color>
+    <color name="translucent_white">#88FFFFFF</color>
     <color name="md_theme_light_primary">#006497</color>
     <color name="md_theme_light_onPrimary">#FFFFFF</color>
     <color name="md_theme_light_primaryContainer">#CAE6FF</color>

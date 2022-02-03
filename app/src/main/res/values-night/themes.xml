@@ -27,6 +27,8 @@
         <item name="colorOnSurfaceInverse">@color/md_theme_dark_inverseOnSurface</item>
         <item name="colorSurfaceInverse">@color/md_theme_dark_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_dark_primaryInverse</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <!--<item name="android:windowLightStatusBar" tools:targetApi="m">true</item>-->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:navigationBarColor">?android:colorBackground</item>
     </style>
 </resources>

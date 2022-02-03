@@ -1,252 +1,247 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:fitsSystemWindows="true"
+    tools:context="activities.MainActivity">
 
-    <include
-        android:id="@+id/toolbar"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/toolbar"/>
+        android:fitsSystemWindows="true">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:clipToPadding="false">
+            android:layout_height="?attr/actionBarSize"
+            app:menu="@menu/activity_main_menu"
+            app:title="@string/app_name"
+            app:titleCentered="true" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/nameTextInputLayout"
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:clipToPadding="false"
+                android:padding="8dp">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/name_text_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/game_name_hint" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    app:endIconMode="clear_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:id="@+id/moreFiltersLinearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nameTextInputLayout">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/game_name_hint" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/sort_by_text_input_layout"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:hint="@string/game_sorting"
+                    app:layout_constraintEnd_toStartOf="@id/sort_by_checkbox"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/name_text_input_layout">
+
+                    <AutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/sort_by_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:button="@drawable/checkbox_ordering"
+                    app:buttonTint="@color/checkbox_color"
+                    android:enabled="false"
+                    android:checked="true"
+                    app:useMaterialThemeColors="false"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/sort_by_text_input_layout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/sort_by_text_input_layout" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/genre_textview"
+                    style="@style/TextAppearance.Material3.TitleLarge"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:text="@string/game_genre"
-                    android:padding="4dp"
-                    style="@style/TextAppearance.Material3.TitleLarge"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/sort_by_text_input_layout" />
 
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/genre_chip_group"
+                <HorizontalScrollView
+                    android:id="@+id/genre_scrollview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:chipSpacingVertical="0dp"
-                    app:chipSpacingHorizontal="4dp">
+                    android:layout_margin="8dp"
+                    android:scrollbarStyle="outsideInset"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/genre_textview">
 
-                    <com.google.android.material.chip.Chip
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/genre_chip_group"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checkable="true"
-                        android:id="@+id/genre_action"
-                        android:text="@string/genre_action"/>
+                        android:layout_height="match_parent"
+                        app:chipSpacingHorizontal="2dp"
+                        app:singleLine="true" />
 
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checkable="true"
-                        android:id="@+id/genre_indie"
-                        android:text="@string/genre_indie"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checkable="true"
-                        android:id="@+id/genre_adventure"
-                        android:text="@string/genre_adventure"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checkable="true"
-                        android:id="@+id/genre_rpg"
-                        android:text="@string/genre_rpg"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checkable="true"
-                        android:id="@+id/genre_strategy"
-                        android:text="@string/genre_strategy"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checkable="true"
-                        android:id="@+id/genre_shooter"
-                        android:text="@string/genre_shooter"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checkable="true"
-                        android:id="@+id/genre_causal"
-                        android:text="@string/genre_causal"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checkable="true"
-                        android:id="@+id/genre_simulation"
-                        android:text="@string/genre_simulation"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checkable="true"
-                        android:id="@+id/genre_puzzle"
-                        android:text="@string/genre_puzzle"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checkable="true"
-                        android:id="@+id/genre_arcade"
-                        android:text="@string/genre_arcade"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checkable="true"
-                        android:id="@+id/genre_platformer"
-                        android:text="@string/genre_platformer"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checkable="true"
-                        android:id="@+id/genre_racing"
-                        android:text="@string/genre_racing"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checkable="true"
-                        android:id="@+id/genre_massively_multiplayer"
-                        android:text="@string/genre_massively_multiplayer"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checkable="true"
-                        android:id="@+id/genre_sports"
-                        android:text="@string/genre_sports"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checkable="true"
-                        android:id="@+id/genre_fighting"
-                        android:text="@string/genre_fighting"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checkable="true"
-                        android:id="@+id/genre_family"
-                        android:text="@string/genre_family"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checkable="true"
-                        android:id="@+id/genre_board_games"
-                        android:text="@string/genre_board_games"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checkable="true"
-                        android:id="@+id/genre_educational"
-                        android:text="@string/genre_educational"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checkable="true"
-                        android:id="@+id/genre_card"
-                        android:text="@string/genre_card"/>
-
-                </com.google.android.material.chip.ChipGroup>
+                </HorizontalScrollView>
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/platforms_textview"
+                    style="@style/TextAppearance.Material3.TitleLarge"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:text="@string/game_platform"
-                    android:padding="4dp"
-                    style="@style/TextAppearance.Material3.TitleLarge"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/genre_scrollview" />
 
-                <com.google.android.material.textview.MaterialTextView
+                <HorizontalScrollView
+                    android:id="@+id/platforms_scrollview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:scrollbarStyle="outsideInset"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/platforms_textview">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/platforms_chip_group"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        app:chipSpacingHorizontal="2dp"
+                        app:singleLine="true" />
+
+                </HorizontalScrollView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/metacritic_score_textview"
+                    style="@style/TextAppearance.Material3.TitleLarge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:text="@string/game_metacritic"
-                    android:padding="4dp"
-                    style="@style/TextAppearance.Material3.TitleLarge"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/platforms_scrollview" />
 
                 <com.google.android.material.slider.RangeSlider
                     android:id="@+id/metacritic_seekbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:stepSize="1.0"
                     android:valueFrom="0.0"
                     android:valueTo="100.0"
-                    android:stepSize="1.0"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/metacritic_score_textview"
                     app:tickVisible="false"
-                    app:values="@array/initial_slider_values" />
+                    app:values="@array/initial_slider_values"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/release_date_textview"
+                    style="@style/TextAppearance.Material3.TitleLarge"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:text="@string/game_release_date"
-                    android:padding="4dp"
-                    style="@style/TextAppearance.Material3.TitleLarge"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/metacritic_seekbar" />
 
-                <com.google.android.material.textview.MaterialTextView
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/start_date_button"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/start_date"
+                    app:icon="@drawable/ic_calendar"
+                    app:iconGravity="textStart"
+                    app:layout_constraintEnd_toStartOf="@id/end_date_button"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/release_date_textview" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/end_date_button"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/end_date"
+                    app:icon="@drawable/ic_calendar"
+                    app:iconGravity="textStart"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/start_date_button"
+                    app:layout_constraintTop_toBottomOf="@id/release_date_textview" />
+
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/game_sorting"
-                    android:padding="4dp"
-                    style="@style/TextAppearance.Material3.TitleLarge"/>
+                    android:layout_margin="8dp"
+                    android:text="Notes:\n\t•None of the options are required to search games\n\t•Use options menu to clear all kind of filters and selections\n\t•Some of the sort options don't make much sense to me\n\t•Enter minimum metacritic score as 1 to remove clones\n\t•Uses RAWG Video Games Database API"
+                    style="@style/TextAppearance.Material3.BodyMedium"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/start_date_button"/>
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
 
-    </androidx.core.widget.NestedScrollView>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/search_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="@string/search_button"
+                app:icon="@drawable/ic_search"
+                app:iconGravity="textStart" />
 
-    <Button
-        android:id="@+id/search_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/search_button"
-        android:padding="8dp"
-        android:layout_margin="8dp"/>
 
-</LinearLayout>
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
