@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +16,6 @@ import com.yukon.videogamefinder.R
 import models.GameResponse
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.Response
 
 class GameListActivity : AppCompatActivity(){
 
@@ -102,7 +100,7 @@ class GameListActivity : AppCompatActivity(){
             options += mapOf("page" to next)
             val result: Call<GameResponse> = RetrofitHelper.getInstance().create(ApiInterface::class.java).getGames(options)
             result.enqueue(object : Callback<GameResponse> {
-                override fun onResponse(call: Call<GameResponse>, response: Response<GameResponse>) {
+                override fun onResponse(call: Call<GameResponse>, response: retrofit2.Response<GameResponse>) {
                     if (response.isSuccessful) {
                         val gameResponse = response.body()
                         if (gameResponse != null) {

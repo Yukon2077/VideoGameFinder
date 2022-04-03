@@ -22,7 +22,9 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.yukon.videogamefinder.R
+import models.GameResponse
 import models.Genre
+import models.Platforms
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,7 +34,7 @@ import java.util.*
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     companion object {
         lateinit var GenreList: List<Genre>
-        lateinit var PlatformList: List<Genre>
+        lateinit var PlatformList: List<Platforms.Platform>
         const val KEY = "02a402186378439dbd7845e8b7083c57"
         var isLoading = false
         var id = 1
@@ -71,10 +73,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         )
 
-        GenreList = getGameAttributesFromFile("genre.json")
+        getGameAttributesFromFile()
         generateChips(GenreList, findViewById(R.id.genre_chip_group))
-
-        PlatformList = getGameAttributesFromFile("platform.json")
         generateChips(PlatformList, findViewById(R.id.platforms_chip_group))
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
@@ -183,10 +183,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             /*Toast.makeText(applicationContext, options.toString(), Toast.LENGTH_LONG).show()*/
             val request = RetrofitHelper.getInstance().create(ApiInterface::class.java).getGames(options)
-            request.enqueue(object : Callback<models.GameResponse> {
+            request.enqueue(object : Callback<GameResponse> {
                 override fun onResponse(
-                    call: Call<models.GameResponse>,
-                    response: Response<models.GameResponse>
+                    call: Call<GameResponse>,
+                    response: Response<GameResponse>
                 ) {
                     if (response.isSuccessful) {
                         val gameResponse = response.body()
@@ -198,7 +198,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     }
                 }
 
-                override fun onFailure(call: Call<models.GameResponse>, t: Throwable) {
+                override fun onFailure(call: Call<GameResponse>, t: Throwable) {
                     Toast.makeText(applicationContext, t.toString(), Toast.LENGTH_LONG)
                         .show()
                     isLoading = false
@@ -234,17 +234,30 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    private fun getGameAttributesFromFile(fileName: String): List<Genre> {
-        val contents = assets.open(fileName)
-            .bufferedReader()
-            .use { it.readText() }
-        return Gson().fromJson(contents, object : TypeToken<List<Genre>>() {}.type)
+    private fun getGameAttributesFromFile() {
+        val fileNames = listOf<String>("genre.json", "platform.json")
+        fileNames.forEach { fileName ->
+            val contents = assets.open(fileName)
+                .bufferedReader()
+                .use { it.readText() }
+
+            if (fileName == "genre.json") {
+                GenreList = Gson().fromJson(contents, object : TypeToken<List<Genre>>() {}.type)
+            } else if (fileName == "platform.json") {
+                PlatformList = Gson().fromJson(contents, object : TypeToken<List<Platforms.Platform>>() {}.type)
+            }
+        }
+
     }
 
-    private fun generateChips(list: List<Genre>, chipGroup: ChipGroup) {
+    private fun generateChips(list: List<Any>, chipGroup: ChipGroup) {
         list.forEach {
             val chip = Chip(chipGroup.context)
-            chip.text = it.name
+            if (it is Genre) {
+                chip.text = it.name
+            } else if (it is Platforms.Platform) {
+                chip.text = it.name
+            }
             chip.isCheckable = true
             chip.isClickable = true
             chip.id = id

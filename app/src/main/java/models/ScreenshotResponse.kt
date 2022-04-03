@@ -2,16 +2,14 @@ package models
 
 import com.google.gson.Gson
 
-data class GameResponse(
+class ScreenshotResponse(
     var count: Int,
     var next: String?,
     var previous: String?,
-    var results: MutableList<Game>
+    var results: MutableList<Screenshot>) {
 
-    ) {
     override fun toString(): String {
         return Gson().toJson(this)
 
     }
-
 }

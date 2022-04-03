@@ -2,6 +2,7 @@ package backend
 
 import models.Game
 import models.GameResponse
+import models.ScreenshotResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,4 +15,7 @@ interface ApiInterface {
 
     @GET("games/{id}")
     fun getGameDetails(@Path("id") id: Int ,@QueryMap options: Map<String, String>): Call<Game>
+
+    @GET("games/{id}/screenshots")
+    fun getGameScreenshots(@Path("id") id: Int ,@QueryMap options: Map<String, String>): Call<ScreenshotResponse>
 }
